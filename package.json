@@ -1,16 +1,25 @@
 {
   "name": "svelte-native-preprocessor",
   "version": "1.0.0",
+  "author": {"name": "David Pershouse"},
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/halfnelson/svelte-native-preprocessor.git"
+  },
+  "homepage": "https://github.com/halfnelson/svelte-native-preprocessor",
   "main": "dist/index.js",
+  "types": "types/index.d.ts",
   "devDependencies": {
     "@types/mocha": "^5.2.6",
     "@types/node": "^11.10.4",
+    "magic-string": "^0.25.2",
     "mocha": "^6.0.2",
     "rollup": "^1.4.0",
     "rollup-plugin-commonjs": "^9.2.1",
     "rollup-plugin-node-resolve": "^4.0.1",
     "rollup-plugin-typescript2": "^0.19.3",
     "sucrase": "^3.9.6",
+    "svelte-template-parser": "git+https://github.com/halfnelson/svelte-component-parser.git#master",
     "typescript": "3.3.3333"
   },
   "scripts": {
@@ -20,6 +29,9 @@
     "pretest": "npm run build"
   },
   "files": [
-    "dist"
+    "dist",
+    "types",
+    "LICENSE",
+    "README.md"
   ]
 }
