@@ -1,0 +1,25 @@
+{
+  "name": "svelte-native-preprocessor",
+  "version": "1.0.0",
+  "main": "dist/index.js",
+  "devDependencies": {
+    "@types/mocha": "^5.2.6",
+    "@types/node": "^11.10.4",
+    "mocha": "^6.0.2",
+    "rollup": "^1.4.0",
+    "rollup-plugin-commonjs": "^9.2.1",
+    "rollup-plugin-node-resolve": "^4.0.1",
+    "rollup-plugin-typescript2": "^0.19.3",
+    "sucrase": "^3.9.6",
+    "typescript": "3.3.3333"
+  },
+  "scripts": {
+    "build": "rollup -c",
+    "dev": "rollup -c -w",
+    "test": "mocha --require sucrase/register --recursive ./test/**/*Fixture.ts",
+    "pretest": "npm run build"
+  },
+  "files": [
+    "dist"
+  ]
+}
