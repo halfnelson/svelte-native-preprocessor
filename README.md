@@ -4,8 +4,9 @@ A preprocessor for [Svelte-Native](https://github.com/halfnelson/svelte-native).
 
 It performs the following transforms to provide a better developer experience when using Svelte-Native:
 
- - [ ] Adds `xmlns="tns"` to the root nodes of each component, ensuring the generated code is compatible with svelte-native
- - [ ] Changes `bind:text="{email}"` to `text="{email}" on:textChanged="{e => email = e.value}"`
+ - [x] Adds `xmlns="tns"` to the root nodes of each component, ensuring the generated code is compatible with svelte-native
+ - [x] Changes `bind:text="{email}"` to `text="{email}" on:textChanged="{e => email = e.value}"`
+ - [ ] Changes `<template>` to `<Template>` and adds `import { Template } from 'svelte-native/components'` to the script tag
 
 ## Installation
 

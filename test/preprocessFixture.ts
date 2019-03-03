@@ -9,6 +9,7 @@ describe("preprocess", function () {
         assert.equal(res.code, expected);
     }
 
+    //wraps input in a page element so we don't have to account for the xmlns attributes
     function testElementMarkup(input: string, expected: string) {
         let content =  `<page xmlns="tns">\n${input}\n</page>`;
         let res = p.markup({ content: content, file: 'Index.svelte' });
@@ -24,7 +25,7 @@ describe("preprocess", function () {
         p = preprocess();
     });
 
-    it('should add process empty file', function () {
+    it('should process empty file', function () {
         testMarkup('', '');
     });
 
@@ -54,7 +55,19 @@ describe("preprocess", function () {
         });
 
         it('should expand bind on regular tags', function() {
-            testElementMarkup('<textInput bind:text={email} />','<textInput text={email} on:textChange="{(e) => email = e.value} />')
+            testElementMarkup('<textInput bind:text={email} />','<textInput text="{email}" on:textChange="{(e) => email = e.value}" />')
+        });
+
+        it('should expand bind with complex lvalues', function() {
+            testElementMarkup('<textInput bind:text={user.contactDetais[i].email} />','<textInput text="{user.contactDetais[i].email}" on:textChange="{(e) => user.contactDetais[i].email = e.value}" />')
+        });
+
+        it('should not expand bind:this on regular tags', function() {
+            testElementMarkup('<textInput bind:this={myinput} />','<textInput bind:this={myinput} />')
+        });
+
+        it('should try to bind to each scope variables', function() {
+            testElementMarkup('{#each collection as item}<textInput bind:text={item} />{/each}','{#each collection as item}<textInput text="{item}" on:textChange="{(e) => item = e.value}" />{/each}')
         });
     });
     
