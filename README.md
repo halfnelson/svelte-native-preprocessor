@@ -13,7 +13,7 @@ It performs the following transforms to provide a better developer experience wh
 Using svelte-loader, in `webpack.config.js`
 
 ```js
-const svelteNativePreprocessor = require("./svelte-native-preprocess");
+const svelteNativePreprocessor = require("./svelte-native-preprocessor");
 ```
 
 and where the `svelte-loader` is registered add it to the options:
