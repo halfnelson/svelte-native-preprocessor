@@ -26,24 +26,34 @@ describe("preprocess", function () {
     });
 
     it('should process empty file', function () {
-        testMarkup('', '');
+        testMarkup('', '<svelte:options namespace="xmlns"/>');
     });
 
-    describe("preprocess adds xmlns attribute", function () {
-        it('should add xmlns attribute to single root element', function () {
-            testMarkup('<page class="root-page"/>', '<page xmlns="tns" class="root-page"/>');
+    describe("preprocess adds xmlns namespace to svelte options", function () {
+        it('should add namespace attribute to existing options element', function () {
+            testMarkup('<svelte:options accessors={true} />', '<svelte:options namespace="xmlns" accessors={true} />');
         });
 
-        it('should add xmlns attribute to single root element with no attributs', function () {
-            testMarkup('<page/>', '<page xmlns="tns" />');
-            testMarkup('<page></page>', '<page xmlns="tns" ></page>');
+        it('should leave namespace attribute alone if it already exists', function () {
+            testMarkup('<svelte:options namespace="svg" /><page class="root-page"/>', '<svelte:options namespace="svg" /><page class="root-page"/>');
         });
 
-        it('should add xmlns attribute and handle whitespace', function() {
-            testMarkup('<page\n></page>', '<page xmlns="tns"\n></page>');
-            testMarkup('<page\n  class="hi"></page>', '<page xmlns="tns"\n  class="hi"></page>');
+        it('should add namespace attribute to existing options element with no attributs', function () {
+            testMarkup('<svelte:options/>', '<svelte:options namespace="xmlns" />');
+            testMarkup('<svelte:options></svelte:options>', '<svelte:options namespace="xmlns" ></svelte:options>');
+        });
+
+        it('should add namespace attribute and handle whitespace', function() {
+            testMarkup('<svelte:options\n></svelte:options>', '<svelte:options namespace="xmlns"\n></svelte:options>');
+            testMarkup('<svelte:options\n  accessors={true}></svelte:options>', '<svelte:options namespace="xmlns"\n  accessors={true}></svelte:options>');
+        })
+
+        it('should add the options element if it doesnt exist', function() {
+            testMarkup('<label text="hello" />', '<svelte:options namespace="xmlns"/><label text="hello" />')
         })
     });
+
+
 
     describe("preprocess adds expands bind: attribute", function () {
         it('should not expand bind on svelte components', function() {

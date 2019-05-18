@@ -49,13 +49,14 @@ export default function preprocess() {
             var out = new MagicString(source.content);
             var src = source.content;
 
-            //transforms
-            const addXmlNamespaceToRootElements = (node: Node, parents: Node[], index: number) => {
-                if (node.type == 'Element' && parents.length == 1) {
-                    let xmlnsAttr = node.attributes.find((attr: any) => attr.name == 'xmlns');
-                    if (!xmlnsAttr) {
-                        insertAttributeToElement(node, 'xmlns="tns"', src, out)
-                    }
+            var processedExistingOptionsAttribute = false;
+
+            const addXmlNamespaceToSvelteOptions = (node: Node, parents: Node[], index: number) => {
+                if (node.type != 'Options') return;
+                processedExistingOptionsAttribute = true;
+                let namespaceAttr = node.attributes.find((attr: any) => attr.name == 'namespace');
+                if (!namespaceAttr) {
+                    insertAttributeToElement(node, 'namespace="xmlns"', src, out)
                 }
             };
 
@@ -73,12 +74,20 @@ export default function preprocess() {
                 }
             };
             
+            const appendOptionWithNamespace = () => {
+                out.prepend('<svelte:options namespace="xmlns"/>')
+            }
+            
             //apply transforms
             var ast = parseComponent(source.content, { filename: source.file })
             walkNodes(ast.html, (node, parents, index) => {
-                addXmlNamespaceToRootElements(node, parents, index);
+                addXmlNamespaceToSvelteOptions(node, parents, index);
                 expandBindOnTagElements(node, parents, index);
             })
+
+            if (!processedExistingOptionsAttribute) {
+                appendOptionWithNamespace();
+            }
 
             //output
             var map = out.generateMap({

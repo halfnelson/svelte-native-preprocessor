@@ -1,6 +1,6 @@
 {
   "name": "svelte-native-preprocessor",
-  "version": "0.1.1",
+  "version": "0.1.2",
   "author": "David Pershouse",
   "license": "MIT",
   "repository": {
@@ -20,13 +20,13 @@
     "@types/node": "^11.10.4",
     "magic-string": "^0.25.2",
     "mocha": "^6.0.2",
-    "rollup": "^1.4.0",
-    "rollup-plugin-commonjs": "^9.2.1",
-    "rollup-plugin-node-resolve": "^4.0.1",
-    "rollup-plugin-typescript2": "^0.19.3",
-    "sucrase": "^3.9.6",
+    "rollup": "^1.12.2",
+    "rollup-plugin-commonjs": "^10.0.0",
+    "rollup-plugin-node-resolve": "^5.0.0",
+    "rollup-plugin-typescript2": "^0.21.1",
+    "sucrase": "^3.10.1",
     "svelte-component-parser": "git+https://github.com/halfnelson/svelte-component-parser.git#master",
-    "typescript": "3.3.3333"
+    "typescript": "3.4.5"
   },
   "scripts": {
     "build": "rollup -c",
