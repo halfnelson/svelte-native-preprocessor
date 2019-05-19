@@ -11,7 +11,11 @@ export default [
 		],
 		plugins: [
 			resolve(), 
-			commonjs(),
+			commonjs({
+				namedExports: {
+					'node_modules/svelte/compiler.js': [ 'parse' ]
+				}
+			}),
 			typescript()
 		]
 	}

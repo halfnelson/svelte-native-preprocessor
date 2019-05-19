@@ -9,6 +9,4 @@ export interface SveltePreprocessorOutput {
 export interface SveltePreprocessorDefinition {
     markup: (source: SveltePreprocessorInput) => SveltePreprocessorOutput;
 }
-
-export default function preprocess(): SveltePreprocessorDefinition 
-export {};
+export default function preprocess(): SveltePreprocessorDefinition;

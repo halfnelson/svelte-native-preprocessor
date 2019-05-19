@@ -1,6 +1,5 @@
 import MagicString from 'magic-string';
-import parseComponent from 'svelte-component-parser'
-import { Ast, Node } from 'svelte-component-parser/interfaces';
+import { Node, parse } from 'svelte/compiler';
 
 export interface SveltePreprocessorInput {
     content: string;
@@ -79,7 +78,7 @@ export default function preprocess() {
             }
             
             //apply transforms
-            var ast = parseComponent(source.content, { filename: source.file })
+            var ast = parse(source.content, { filename: source.file })
             walkNodes(ast.html, (node, parents, index) => {
                 addXmlNamespaceToSvelteOptions(node, parents, index);
                 expandBindOnTagElements(node, parents, index);
