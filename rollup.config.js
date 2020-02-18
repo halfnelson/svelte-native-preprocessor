@@ -13,7 +13,7 @@ export default [
 			resolve(), 
 			commonjs({
 				namedExports: {
-					'node_modules/svelte/compiler.js': [ 'parse' ]
+					'node_modules/svelte/compiler.js': [ 'parse', 'walk' ]
 				}
 			}),
 			typescript()

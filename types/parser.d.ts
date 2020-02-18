@@ -25,4 +25,5 @@ declare module 'svelte/compiler' {
     }
   
     export function parse(template: string, options?: ParserOptions): Ast;
+    export function walk(node: Node, handlers: { enter?: (node: Node, parent: Node, prop: string, index: number) => void } ): void;
 }

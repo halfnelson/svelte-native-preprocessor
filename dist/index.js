@@ -27441,14 +27441,9 @@ var compiler = createCommonjsModule(function (module, exports) {
 
 });
 
-var compiler$1 = unwrapExports(compiler);
+unwrapExports(compiler);
 var compiler_1 = compiler.parse;
-
-var svelte = /*#__PURE__*/Object.freeze({
-    'default': compiler$1,
-    __moduleExports: compiler,
-    parse: compiler_1
-});
+var compiler_2 = compiler.walk;
 
 function isWhiteSpace(char) {
     return char == ' ' || char == '\n' || char == '\t' || char == '\r';
@@ -27492,7 +27487,7 @@ function preprocess() {
             };
             //apply transforms
             var ast = compiler_1(source.content, { filename: source.file });
-            undefined(ast.html, {
+            compiler_2(ast.html, {
                 enter: (node, parent, prop, index) => {
                     addXmlNamespaceToSvelteOptions(node);
                     expandBindOnTagElements(node);
