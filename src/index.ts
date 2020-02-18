@@ -1,5 +1,6 @@
 import MagicString from 'magic-string';
 import { Node, parse } from 'svelte/compiler';
+import * as svelte from 'svelte/compiler';
 
 export interface SveltePreprocessorInput {
     content: string;
@@ -50,7 +51,7 @@ export default function preprocess() {
 
             var processedExistingOptionsAttribute = false;
 
-            const addXmlNamespaceToSvelteOptions = (node: Node, parents: Node[], index: number) => {
+            const addXmlNamespaceToSvelteOptions = (node: Node) => {
                 if (node.type != 'Options') return;
                 processedExistingOptionsAttribute = true;
                 let namespaceAttr = node.attributes.find((attr: any) => attr.name == 'namespace');
@@ -59,7 +60,7 @@ export default function preprocess() {
                 }
             };
 
-            const expandBindOnTagElements = (node: Node, parents: Node[], index: number) => {
+            const expandBindOnTagElements = (node: Node) => {
                 if (node.type == 'Element') {
                     for (let binding of (node.attributes || []).filter((a: any) => a.type == 'Binding')) {
                         let prop = binding.name;
@@ -78,12 +79,15 @@ export default function preprocess() {
             }
             
             //apply transforms
-            var ast = parse(source.content, { filename: source.file })
-            walkNodes(ast.html, (node, parents, index) => {
-                addXmlNamespaceToSvelteOptions(node, parents, index);
-                expandBindOnTagElements(node, parents, index);
+            var ast = parse(source.content, { filename: source.file });
+           
+            (svelte as any).walk(ast.html, { 
+                enter: (node: Node, parent: Node, prop: string, index: number) => {
+                    addXmlNamespaceToSvelteOptions(node);
+                    expandBindOnTagElements(node);
+                }
             })
-
+  
             if (!processedExistingOptionsAttribute) {
                 appendOptionWithNamespace();
             }

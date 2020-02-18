@@ -79,6 +79,13 @@ describe("preprocess", function () {
         it('should try to bind to each scope variables', function() {
             testElementMarkup('{#each collection as item}<textInput bind:text={item} />{/each}','{#each collection as item}<textInput text="{item}" on:textChange="{(e) => item = e.value}" />{/each}')
         });
+
+        it(`should bind to nested items`, function() {
+            testElementMarkup(
+                '{#if true}<label>True</label>{:else}<textField bind:text={username} />{/if}',
+                '{#if true}<label>True</label>{:else}<textField text="{username}" on:textChange="{(e) => username = e.value}" />{/if}'
+            );
+        })
     });
     
 })
