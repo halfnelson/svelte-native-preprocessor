@@ -27486,7 +27486,15 @@ function preprocess() {
                 out.prepend('<svelte:options namespace="xmlns"/>');
             };
             //apply transforms
-            var ast = compiler_1(source.content, { filename: source.file });
+            try {
+                var ast = compiler_1(source.content, { filename: source.file });
+            }
+            catch (e) {
+                //convert svelte CompilerError to string for our loader (rollup/webpack)
+                var error = new Error(`${source.file ? `${source.file} :` : ""}${e.toString()}`);
+                error.name = `SvelteNativePreprocessor/${e.name}`;
+                throw error;
+            }
             compiler_2(ast.html, {
                 enter: (node, parent, prop, index) => {
                     addXmlNamespaceToSvelteOptions(node);

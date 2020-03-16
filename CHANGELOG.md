@@ -1,4 +1,7 @@
 ## Changes
+0.1.7 2020-03-16
+    - Improve parse error messages to include filename, position, and source frame
+
 0.1.6 2020-02-18
     - Handle if blocks correctly
     - Use svelte's built in ast walker

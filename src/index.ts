@@ -79,7 +79,14 @@ export default function preprocess() {
             }
             
             //apply transforms
-            var ast = parse(source.content, { filename: source.file });
+            try {
+                var ast = parse(source.content, { filename: source.file });
+            } catch (e) {
+                //convert svelte CompilerError to string for our loader (rollup/webpack)
+                var error = new Error(`${source.file ? `${source.file} :` : ""}${e.toString()}`);
+                error.name = `SvelteNativePreprocessor/${e.name}`
+                throw error;
+            }
            
             walk(ast.html, { 
                 enter: (node: Node, parent: Node, prop: string, index: number) => {
