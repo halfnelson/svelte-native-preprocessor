@@ -7,7 +7,7 @@ export default [
 	{
 		input: 'src/index.ts',
 		output: [
-			{ file: pkg.main, format: 'cjs' },
+			{ file: pkg.main, format: 'umd', name: "svelteNativePreprocessor" },
 		],
 		plugins: [
 			resolve(), 
