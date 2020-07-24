@@ -1,5 +1,6 @@
 import MagicString from 'magic-string';
-import { Node, parse, walk } from 'svelte/compiler';
+import { Node, walk } from 'svelte/compiler';
+import { parseHtmlx } from './htmlxparser'
 
 
 export interface SveltePreprocessorInput {
@@ -80,7 +81,7 @@ export default function preprocess() {
             
             //apply transforms
             try {
-                var ast = parse(source.content, { filename: source.file });
+                var ast = parseHtmlx(source.content);
             } catch (e) {
                 //convert svelte CompilerError to string for our loader (rollup/webpack)
                 var error = new Error(`${source.file ? `${source.file} :` : ""}${e.toString()}`);
@@ -88,7 +89,7 @@ export default function preprocess() {
                 throw error;
             }
            
-            walk(ast.html, { 
+            walk(ast, { 
                 enter: (node: Node, parent: Node, prop: string, index: number) => {
                     addXmlNamespaceToSvelteOptions(node);
                     expandBindOnTagElements(node);

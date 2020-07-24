@@ -1,4 +1,8 @@
 ## Changes
+
+0.2.0 2020-07-24
+    - use htmlxparser instead of svelte to unblock typescript support
+
 0.1.8 2020-04-22
     - Provide umd module to support repl usage
 
