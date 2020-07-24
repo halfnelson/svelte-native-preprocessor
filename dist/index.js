@@ -36001,7 +36001,7 @@
             const orgEnd = el.sourceCodeLocation.endOffset || 0;
             const outerHtml = htmlx.substring(orgStart, orgEnd);
             const onlyTag = content ? outerHtml.replace(content.value, '') : outerHtml;
-            return tagNames.some((tag) => onlyTag === tag);
+            return tagNames.some((tag) => !!onlyTag.match(tag));
         };
         walkAst(doc, (el) => {
             const parseValue = (attr) => {

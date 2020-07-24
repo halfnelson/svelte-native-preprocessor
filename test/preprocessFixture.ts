@@ -87,5 +87,14 @@ describe("preprocess", function () {
             );
         })
     });
+
+    describe('preprocess should handle typescript', function() {
+        it(`should not crash on ts scripts`, function() {
+            testElementMarkup(
+                '<script lang="typescript"> let message: string = "Blank Svelte Native App" </script>',
+                '<script lang="typescript"> let message: string = "Blank Svelte Native App" </script>'
+            )
+        })
+    })
     
 })

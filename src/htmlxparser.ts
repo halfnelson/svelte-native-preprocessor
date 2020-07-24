@@ -27,7 +27,7 @@ export function findVerbatimElements(htmlx: string) {
         const outerHtml = htmlx.substring(orgStart, orgEnd);
         const onlyTag = content ? outerHtml.replace(content.value, '') : outerHtml;
 
-        return tagNames.some((tag) => onlyTag === tag);
+        return tagNames.some((tag) => !!onlyTag.match(tag));
     };
 
     walkAst(doc as DefaultTreeElement, (el) => {
