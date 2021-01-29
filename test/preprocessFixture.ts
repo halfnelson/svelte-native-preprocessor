@@ -26,30 +26,30 @@ describe("preprocess", function () {
     });
 
     it('should process empty file', function () {
-        testMarkup('', '<svelte:options namespace="xmlns"/>');
+        testMarkup('', '<svelte:options namespace="foreign"/>');
     });
 
-    describe("preprocess adds xmlns namespace to svelte options", function () {
+    describe("preprocess adds foreign namespace to svelte options", function () {
         it('should add namespace attribute to existing options element', function () {
-            testMarkup('<svelte:options accessors={true} />', '<svelte:options namespace="xmlns" accessors={true} />');
+            testMarkup('<svelte:options accessors={true} />', '<svelte:options namespace="foreign" accessors={true} />');
         });
 
         it('should leave namespace attribute alone if it already exists', function () {
             testMarkup('<svelte:options namespace="svg" /><page class="root-page"/>', '<svelte:options namespace="svg" /><page class="root-page"/>');
         });
 
-        it('should add namespace attribute to existing options element with no attributs', function () {
-            testMarkup('<svelte:options/>', '<svelte:options namespace="xmlns" />');
-            testMarkup('<svelte:options></svelte:options>', '<svelte:options namespace="xmlns" ></svelte:options>');
+        it('should add namespace attribute to existing options element with no attributes', function () {
+            testMarkup('<svelte:options/>', '<svelte:options namespace="foreign" />');
+            testMarkup('<svelte:options></svelte:options>', '<svelte:options namespace="foreign" ></svelte:options>');
         });
 
         it('should add namespace attribute and handle whitespace', function() {
-            testMarkup('<svelte:options\n></svelte:options>', '<svelte:options namespace="xmlns"\n></svelte:options>');
-            testMarkup('<svelte:options\n  accessors={true}></svelte:options>', '<svelte:options namespace="xmlns"\n  accessors={true}></svelte:options>');
+            testMarkup('<svelte:options\n></svelte:options>', '<svelte:options namespace="foreign"\n></svelte:options>');
+            testMarkup('<svelte:options\n  accessors={true}></svelte:options>', '<svelte:options namespace="foreign"\n  accessors={true}></svelte:options>');
         })
 
         it('should add the options element if it doesnt exist', function() {
-            testMarkup('<label text="hello" />', '<svelte:options namespace="xmlns"/><label text="hello" />')
+            testMarkup('<label text="hello" />', '<svelte:options namespace="foreign"/><label text="hello" />')
         })
     });
 
