@@ -57,7 +57,7 @@ export default function preprocess() {
                 processedExistingOptionsAttribute = true;
                 let namespaceAttr = node.attributes.find((attr: any) => attr.name == 'namespace');
                 if (!namespaceAttr) {
-                    insertAttributeToElement(node, 'namespace="xmlns"', src, out)
+                    insertAttributeToElement(node, 'namespace="foreign"', src, out)
                 }
             };
 
@@ -76,7 +76,7 @@ export default function preprocess() {
             };
             
             const appendOptionWithNamespace = () => {
-                out.prepend('<svelte:options namespace="xmlns"/>')
+                out.prepend('<svelte:options namespace="foreign"/>')
             }
             
             //apply transforms
