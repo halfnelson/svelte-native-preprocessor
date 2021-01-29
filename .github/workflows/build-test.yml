@@ -1,0 +1,35 @@
+name: Workflow for building and testing the project
+
+env:
+  NODE_VERSION: "14.15.4"
+  NODE_ENV: development
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+
+jobs:
+  build:
+    runs-on: ubuntu-16.04
+
+    steps:
+      - name: checkout to branch
+        uses: actions/checkout@v2
+
+      - name: setup node.js
+        uses: actions/setup-node@v1
+        with:
+          node-version: ${{ env.NODE_VERSION }}
+
+      - name: install packages
+        run: npm i
+
+      - name: test the project
+        run: npm t
+
+      - name: build the project
+        run: npm run build
