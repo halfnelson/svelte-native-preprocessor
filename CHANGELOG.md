@@ -1,5 +1,8 @@
 ## Changes
 
+1.0.0 2021-04-09
+    - **BREAKING** doesn't introduce a namespace element. Use ` compilerOptions: { namespace: 'foreign' } ` in svelte.config.js instead ( requires nativescript webpack 5.0.0 )
+
 0.2.0 2020-07-24
     - use htmlxparser instead of svelte to unblock typescript support
 
