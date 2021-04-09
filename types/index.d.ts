@@ -1,6 +1,6 @@
 export interface SveltePreprocessorInput {
     content: string;
-    file: string;
+    filename: string;
 }
 export interface SveltePreprocessorOutput {
     code: string;
