@@ -9,8 +9,8 @@ describe("preprocess errors", function () {
         p = preprocess();
         let content =  `<page>\n<#!invalidTag<\n</page>`;
         try {
-            let res = p.markup({ content: content, file: 'Index.svelte' });
-            assert.fail("didn't through at all")
+            let res = p.markup({ content: content, filename: 'Index.svelte' });
+            assert.fail("didn't throw at all")
         } catch (e) {
             generatedError = e;
         }

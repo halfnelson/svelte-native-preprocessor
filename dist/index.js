@@ -36085,30 +36085,12 @@
         return svelteHtmlxAst;
     }
 
-    function isWhiteSpace(char) {
-        return char == ' ' || char == '\n' || char == '\t' || char == '\r';
-    }
-    function insertAttributeToElement(element, attributeString, src, dest) {
-        let insertIdx = src.indexOf(element.name, element.start) + element.name.length;
-        let insertStr = ` ${attributeString}` + (isWhiteSpace(src[insertIdx]) ? '' : ' ');
-        dest.appendRight(insertIdx, insertStr);
-    }
     function preprocess() {
         return {
             markup: function (source) {
                 //input
                 var out = new MagicString(source.content);
                 var src = source.content;
-                var processedExistingOptionsAttribute = false;
-                const addXmlNamespaceToSvelteOptions = (node) => {
-                    if (node.type != 'Options')
-                        return;
-                    processedExistingOptionsAttribute = true;
-                    let namespaceAttr = node.attributes.find((attr) => attr.name == 'namespace');
-                    if (!namespaceAttr) {
-                        insertAttributeToElement(node, 'namespace="xmlns"', src, out);
-                    }
-                };
                 const expandBindOnTagElements = (node) => {
                     if (node.type == 'Element') {
                         for (let binding of (node.attributes || []).filter((a) => a.type == 'Binding')) {
@@ -36122,32 +36104,25 @@
                         }
                     }
                 };
-                const appendOptionWithNamespace = () => {
-                    out.prepend('<svelte:options namespace="xmlns"/>');
-                };
                 //apply transforms
                 try {
                     var ast = parseHtmlx(source.content);
                 }
                 catch (e) {
                     //convert svelte CompilerError to string for our loader (rollup/webpack)
-                    var error = new Error(`${source.file ? `${source.file} :` : ""}${e.toString()}`);
+                    var error = new Error(`${source.filename ? `${source.filename} :` : ""}${e.toString()}`);
                     error.name = `SvelteNativePreprocessor/${e.name}`;
                     throw error;
                 }
                 compiler_2(ast, {
                     enter: (node, parent, prop, index) => {
-                        addXmlNamespaceToSvelteOptions(node);
                         expandBindOnTagElements(node);
                     }
                 });
-                if (!processedExistingOptionsAttribute) {
-                    appendOptionWithNamespace();
-                }
                 //output
                 var map = out.generateMap({
-                    source: source.file,
-                    file: source.file + ".map",
+                    source: source.filename,
+                    file: source.filename + ".map",
                     includeContent: true
                 });
                 return { code: out.toString(), map: map.toString() };
