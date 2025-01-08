@@ -1,6 +1,6 @@
 {
   "name": "svelte-native-preprocessor",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "author": "David Pershouse",
   "license": "MIT",
   "repository": {
@@ -16,7 +16,7 @@
   "main": "dist/index.js",
   "types": "types/index.d.ts",
   "peerDependencies": {
-    "svelte": "^3.37.0"
+    "svelte": ">= 3.37.0 < 5"
   },
   "devDependencies": {
     "@types/mocha": "^5.2.6",
